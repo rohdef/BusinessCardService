@@ -1,11 +1,6 @@
 <?php
 $dbconn = null;
 
-$host = "localhost";
-$db = "postgres";
-$user = "postgres";
-$pass = "";
-
 function pgConnect() {
   global $dbconn, $host, $db, $user, $pass;
   $dbconn = pg_connect("host=$host dbname=$db user=$user password=$pass");

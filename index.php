@@ -4,9 +4,11 @@
 </head>
 <body>
 <?php
+include('config.php');
 include('dbhelper.php');
 include('person.php');
 include('project.php');
+include('contact.php');
 
 pgConnect();
 
@@ -18,19 +20,11 @@ $projects = getProjectsFromDb();
 echo("<h3>Projects</h3>");
 echo("<p>" . json_encode($projects) . "</p>");
 
+$p = getContact();
 echo("<h3>Contact (hardcoded)</h3>");
+echo("<p>" . json_encode($p) . "</p>");
 
 pgClose();
-
-$p = new Person();
-$p->lastName = "Fischer";
-$p->firstName = "Rohde";
-$p->address = "Kirkegårdsvej 10 D, 3.-3";
-$p->postal = 8000;
-$p->city = "Aarhus";
-$p->email = "rohdef@rohdef.dk";
-
-echo("<p>" . json_encode($p) . "</p>");
 ?>
 </body>
 </html>
