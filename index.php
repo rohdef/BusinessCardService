@@ -1,30 +1,37 @@
-<html>
-<head>
-<title>Foo</title>
-</head>
-<body>
 <?php
-include('config.php');
-include('dbhelper.php');
-include('person.php');
-include('project.php');
-include('contact.php');
+header('Content-type: application/json');
+
+require('config.php');
+require('dbhelper.php');
+require('person.php');
+require('project.php');
+require('contact.php');
+require('skill.php');
+
+#$dataVersion = $_GET['dataVersion'];
+$type = $_GET['type'];
+$data = null;
 
 pgConnect();
 
-$persons = getPersonsFromDb();
-echo("<h3>Persons</h3>");
-echo("<p>" . json_encode($persons) . "</p>");
+switch($type) {
+  case 'projects':
+    $data = getProjectsFromDb();
+    break;
+  case 'references':
+    $data = getPersonsFromDb();
+    break;
+  case 'skills':
+    $data = getSkillsFromDb();
+    break;
+  case 'contact':
+    $data = getContact();
+    break;
+  default:
+    die("{'error':'No valid type selection'}");
+}
 
-$projects = getProjectsFromDb();
-echo("<h3>Projects</h3>");
-echo("<p>" . json_encode($projects) . "</p>");
-
-$p = getContact();
-echo("<h3>Contact (hardcoded)</h3>");
-echo("<p>" . json_encode($p) . "</p>");
+echo(json_encode($data));
 
 pgClose();
 ?>
-</body>
-</html>
