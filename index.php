@@ -4,6 +4,7 @@ header('Content-type: application/json');
 require('config.php');
 require('dbhelper.php');
 require('person.php');
+require('resource.php');
 require('project.php');
 require('contact.php');
 require('skill.php');

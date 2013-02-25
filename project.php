@@ -1,11 +1,11 @@
 <?php
 class Project {
-  public $name, $shortDescription, $fullDescription, $teamWork, $startDate, $endDate, $skills, $references;
+  public $name, $shortDescription, $fullDescription, $teamWork, $startDate, $endDate, $skills, $references, $resources;
 }
 
 function getProjectsFromDb() {
   $skillSubquery = "(SELECT array(SELECT s.skillName FROM projectskills s where projectname=p.name))";
-  $referenceSubquery = "(SELECT array(SELECT s.personemail FROM projectpersons s where projectname=p.name))";
+  $referenceSubquery = "(SELECT array(SELECT s.personemail FROM projectpersons s where s.projectname=p.name))";
   $query = "SELECT p.*, $skillSubquery AS skills, $referenceSubquery AS references FROM project p;";
   $projects = array();
 
@@ -17,6 +17,8 @@ function getProjectsFromDb() {
 
     $references = $row->references;
     $row->references = parseDbArray($references);
+
+    $row->resources = getResourcesFromDb($row->name);
 
     $projects[] = $row;
   }
