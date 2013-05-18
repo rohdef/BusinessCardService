@@ -1,5 +1,7 @@
 <?php
+// Tell that we're returning json and allow cross domain ajax.
 header('Content-type: application/json');
+header('Access-Control-Allow-Origin: *');
 
 require('config.php');
 require('dbhelper.php');
@@ -32,6 +34,7 @@ switch($type) {
     die("{'error':'No valid type selection'}");
 }
 
+// Send the json encoded response back
 echo(json_encode($data));
 
 pgClose();
